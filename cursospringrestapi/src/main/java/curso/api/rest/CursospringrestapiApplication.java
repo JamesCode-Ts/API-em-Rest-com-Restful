@@ -1,0 +1,52 @@
+package curso.api.rest;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+@SpringBootApplication
+@EntityScan(basePackages = {"curso.api.rest.model"})
+@ComponentScan(basePackages = {"curso.*"})
+@EnableJpaRepositories(basePackages = {"curso.api.rest.repository"})
+@EnableTransactionManagement
+@EnableWebMvc
+@RestController
+@EnableAutoConfiguration
+@EnableCaching
+public class CursospringrestapiApplication implements WebMvcConfigurer{
+	public static void main(String[] args) {
+		SpringApplication.run(CursospringrestapiApplication.class, args);
+		//System.out.println(new BCryptPasswordEncoder().encode("123"));
+	}
+
+	/*Mapeamento global que refletem em todo o sistema*/
+	@Override
+	public void addCorsMappings(CorsRegistry registry) {
+	
+		registry.addMapping("/usuario/**")
+		.allowedMethods("*")
+		.allowedOrigins("*");
+		
+		/*Liberando o mapeamento de usuário para todas as origens*/
+	}
+	
+	/* Por padrão quando uma requisição sai de um navegador
+	 * Por meio de ajax o navegador bloqueia a solicitação
+	 * é preciso que haja uma permição no servidor nos end-ponts 
+	 * No caso por falta de hospedagem no momento estou utilizando
+	 * o servidor local. Na parte do controlle onde fica os métodos 
+	 * com regra de negocio precisa ter a a notação @CrossOrigin,
+	 * fora isso não vai ser possivel ter uma conecção via ajax pela 
+	 * a pagina implementada para tal função*/
+	
+}
