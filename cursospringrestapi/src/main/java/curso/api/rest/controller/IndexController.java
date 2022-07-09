@@ -75,15 +75,15 @@ public class IndexController {
 		
 		/** Consumindo API publica externa **/
 		URL url = new URL("https://viacep.com.br/ws/" +usuario.getCep()+ "/json/");
-		URLConnection connection = url.openConnection();
-		InputStream is = connection.getInputStream();
-		BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+		URLConnection connection = url.openConnection(); /*Abre a conecção*/
+		InputStream is = connection.getInputStream(); /* Vai vim os dados das requisições*/
+		BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8")); /* Prepara a leitura e dentro*/
 		
 		String cep = "";
-		StringBuffer jsonCep = new StringBuffer();
+		StringBuffer jsonCep = new StringBuffer(); /*Serve para juntar o retorno*/
 		
-		while((cep = br.readLine()) != null){
-			jsonCep.append(cep);
+		while((cep = br.readLine()) != null){  /*Enquando tiver linhas, coloca os dados da linha na variavel cep*/
+			jsonCep.append(cep); /* Junta as linhas*/
 			
 		}
 
